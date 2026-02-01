@@ -1,9 +1,8 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import plotly.express as px
 
-# Load YOUR fraud model (change filename if needed)
+# Load YOUR fraud model
 @st.cache_data
 def load_my_model():
     data = joblib.load('fraud_production_model.pkl')
@@ -15,7 +14,7 @@ model, cutoff_score, all_features = load_my_model()
 st.title("🚨 Fraud Detector")
 st.markdown("**94% accurate • Catches 89% fraud • Your 6.3M dataset model**")
 
-# Simple input boxes (like a form)
+# Simple input boxes 
 hour = st.slider("Hour (1-24)", 1, 24, 12)
 payment_type = st.selectbox("Payment type", 
     ["PAYMENT", "TRANSFER", "CASH_OUT", "DEBIT", "CASH_IN"])
@@ -63,8 +62,12 @@ st.sidebar.metric("Accuracy", "94%")
 st.sidebar.metric("Fraud Caught", "89%")
 st.sidebar.metric("Transactions", "63 लाख")
 
-# Cool chart of YOUR top features
-st.markdown("### 📊 What your model looks at most")
-[image:131]
+st.sidebar.markdown("""
+### Top Fraud Signals:
+1. **Sender account emptied**
+2. **TRANSFER payments** 
+3. **CASH_OUT withdrawals**
+4. **Large amounts**
+""")
 
 st.caption("💾 Made by you with 6.3M transactions + XGBoost")
